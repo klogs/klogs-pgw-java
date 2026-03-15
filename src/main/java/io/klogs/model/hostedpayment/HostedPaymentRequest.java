@@ -1,9 +1,8 @@
-package io.klogs.model.cardpayment;
+package io.klogs.model.hostedpayment;
 
+import io.klogs.model.cardpayment.SalesType;
 import io.klogs.model.common.Address;
-import io.klogs.model.common.CreditCard;
 import io.klogs.model.common.Product;
-import io.klogs.model.common.Reward;
 
 import lombok.Builder;
 import lombok.Data;
@@ -11,41 +10,30 @@ import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.util.Map;
-import java.util.UUID;
 
 @Data
 @SuperBuilder
-public class CardPaymentRequest {
-    protected String token;
-
+public class HostedPaymentRequest {
     @Builder.Default
     protected BigDecimal amount = BigDecimal.ZERO;
-    protected Integer installment;
-    protected String referenceCode;
-    protected boolean useStoredCard;
+    protected String currency;
 
-    protected CreditCard card;
-    protected Reward reward;
+    protected String referenceCode;
+
     protected Address invoice;
     protected Address shipping;
 
-    protected String ownerKey;
-    protected UUID cardId;
-    protected boolean saveCard;
-    protected String customerIp;
-
     protected String explanation;
-    protected boolean use3d;
 
     protected Map<String, String> additionalData;
 
-    protected String currency;
     protected String email;
     protected String phone;
     protected String returnURL;
     protected SalesType chargeType;
-    protected String paymentSystemCode;
+    protected String fullName;
     protected String nationalNumber;
 
     protected Product[] products;
+    protected String paymentMethod;
 }

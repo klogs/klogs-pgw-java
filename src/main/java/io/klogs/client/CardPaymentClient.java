@@ -11,18 +11,20 @@ import org.apache.hc.core5.net.URIBuilder;
 import java.net.URISyntaxException;
 import java.util.List;
 
-public class CardPayment extends HttpClient {
+public class CardPaymentClient extends HttpClient {
 
-    public CardPayment(ClientOptions options) {
+    public CardPaymentClient(ClientOptions options) {
         super(options);
     }
 
     public CardPaymentResponse pay(CardPaymentRequest request) {
-        return post("api/cardPayment", request, null, new BasicJsonResponseHandler<>(CardPaymentResponse.class).handler);
+        return post("api/cardPayment", request, null,
+                new BasicJsonResponseHandler<>(CardPaymentResponse.class).handler);
     }
 
     public Response provisionCommit(ProvisionCommitRequest request) {
-        return post("api/cardPayment/provisionCommit", request, null, new BasicJsonResponseHandler<>(CardPaymentResponse.class).handler);
+        return post("api/cardPayment/provisionCommit", request, null,
+                new BasicJsonResponseHandler<>(CardPaymentResponse.class).handler);
     }
 
     public CommissionResponse commissionsByBin(CommissionRequest request) throws URISyntaxException {
@@ -31,6 +33,22 @@ public class CardPayment extends HttpClient {
 
         if (request.getAmount() != null) {
             urlBuilder.setParameter("amount", request.getAmount().toString());
+        }
+
+        if (request.getCardId() != null) {
+            urlBuilder.setParameter("cardId", request.getCardId().toString());
+        }
+
+        if (request.getProductCodes() != null && !request.getProductCodes().isEmpty()) {
+            for (String productCode : request.getProductCodes()) {
+                urlBuilder.setParameter("productCode", productCode);
+            }
+        }
+
+        if (request.getProductCategoryCodes() != null && !request.getProductCategoryCodes().isEmpty()) {
+            for (String productCategoryCode : request.getProductCategoryCodes()) {
+                urlBuilder.setParameter("productCategoryCode", productCategoryCode);
+            }
         }
 
         var requestUrl = urlBuilder.setParameter("binNumber", request.getBinNumber())

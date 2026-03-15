@@ -1,6 +1,8 @@
 package io.klogs;
 
-import io.klogs.client.CardPayment;
+import io.klogs.client.CardPaymentClient;
+import io.klogs.client.HostedPaymentClient;
+import io.klogs.client.PaymentTransactionClient;
 
 public class Klogs {
     public Klogs(String apiKey, String secretKey, String baseURL) {
@@ -9,8 +11,12 @@ public class Klogs {
                 .setSecretKey(secretKey)
                 .setBaseURL(baseURL);
 
-        this.CardPayment = new CardPayment(options);
+        this.CardPayment = new CardPaymentClient(options);
+        this.PaymentTransaction = new PaymentTransactionClient(options);
+        this.HostedPayment = new HostedPaymentClient(options);
     }
 
-    public final CardPayment CardPayment;
+    public final CardPaymentClient CardPayment;
+    public final PaymentTransactionClient PaymentTransaction;
+    public final HostedPaymentClient HostedPayment;
 }
