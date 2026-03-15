@@ -17,6 +17,11 @@ public class CardPaymentClient extends HttpClient {
         super(options);
     }
 
+    public PaymentTokenResponse createPaymentToken() {
+        return get("api/cardPayment/token", null,
+                new BasicJsonResponseHandler<>(PaymentTokenResponse.class).handler);
+    }
+
     public CardPaymentResponse pay(CardPaymentRequest request) {
         return post("api/cardPayment", request, null,
                 new BasicJsonResponseHandler<>(CardPaymentResponse.class).handler);
